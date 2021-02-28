@@ -3,6 +3,8 @@ import MovieListItem from 'components/movie-list-item';
 import GeneralLayout from 'components/general-layout';
 import Input from 'components/input';
 import apiClient from 'utils/api-client';
+
+// TODO: Reescribeme usando useState y useEffect
 class Movies extends React.Component {
   constructor(props) {
     super(props);
