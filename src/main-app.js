@@ -1,7 +1,8 @@
 import React from 'react';
+import MoviesScreen from 'screens/movies';
 
 const App = () => {
-  return <div>Hello world!</div>;
+  return <MoviesScreen />;
 };
 
 export default App;
