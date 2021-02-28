@@ -1,0 +1,24 @@
+.signup-form {
+  width: 320px;
+}
+
+.signup-form input {
+  font-size: 16px;
+}
+
+.signup-form input[type='text'] {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  margin-bottom: -2px;
+}
+
+.signup-form input[type='email'] {
+  margin-bottom: -1px;
+  border-radius: 0;
+}
+
+.signup-form input[type='password'] {
+  margin-top: -2px;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}

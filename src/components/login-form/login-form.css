@@ -1,0 +1,19 @@
+.login-form {
+  width: 320px;
+}
+
+.login-form input {
+  font-size: 16px;
+}
+
+.login-form input[type='email'] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.login-form input[type='password'] {
+  margin-top: -1px;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}
