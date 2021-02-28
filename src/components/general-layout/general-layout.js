@@ -4,7 +4,9 @@ import React from 'react';
 const GeneralLayout = ({ children }) => {
   return (
     <div>
-      <main>{children}</main>
+      <main>
+        <div className="container">Que ponemos aquí?</div>
+      </main>
     </div>
   );
 };
