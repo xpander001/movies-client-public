@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import GeneralLayout from 'components/general-layout';
+import ContainedLayout from 'components/contained-layout';
 import { useParams } from 'react-router-dom';
 import apiClient from 'utils/api-client';
 import useApiCall from 'hooks/use-api-call';
@@ -14,26 +14,26 @@ const MovieDetail = () => {
 
   if (!loaded) {
     return (
-      <GeneralLayout>
+      <ContainedLayout>
         <p>Loading</p>
-      </GeneralLayout>
+      </ContainedLayout>
     );
   }
 
   if (movie) {
     return (
-      <GeneralLayout>
+      <ContainedLayout>
         <p>{movie.title}</p>
         <p>{movie.description}</p>
-      </GeneralLayout>
+      </ContainedLayout>
     );
   }
 
   if (loaded && !movie) {
     return (
-      <GeneralLayout>
+      <ContainedLayout>
         <p>Movie for id {movieId} not found!</p>
-      </GeneralLayout>
+      </ContainedLayout>
     );
   }
 };

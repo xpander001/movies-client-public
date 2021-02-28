@@ -1,22 +1,42 @@
-import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
-import MoviesScreen from 'screens/movies';
-import MovieDetailScreen from 'screens/movie-detail';
-import { routes } from 'utils/constants';
+import React, { useState, useEffect } from 'react';
+import AuthenticatedApp from 'authenticated-app';
+import UnauthenticatedApp from 'unathenticated-app';
+import { signup as authSignup, getToken, me as authMe } from 'utils/auth-utils';
+import useApiCall from 'hooks/use-api-call';
+
+const getUser = async () => {
+  let user = null;
+
+  const token = await getToken();
+  if (token) {
+    const userData = await authMe(token);
+    user = userData;
+  }
+
+  return user;
+};
 
 const App = () => {
-  return (
-    <Switch>
-      <Route path={routes.home} exact>
-        <MoviesScreen />
-      </Route>
-      <Route path={routes.movieDetail}>
-        <MovieDetailScreen />
-      </Route>
-      <Route path={routes.all}>
-        <Redirect to={routes.home} />
-      </Route>
-    </Switch>
+  const { run, data: user, loaded, setData: setUser } = useApiCall();
+
+  useEffect(() => {
+    run(getUser());
+  }, [run]);
+
+  const signUp = (name, email, password) => {
+    authSignup(name, email, password).then((user) => setUser(user));
+  };
+
+  const login = () => {};
+
+  if (!loaded) {
+    return <p>loading</p>;
+  }
+
+  return user ? (
+    <AuthenticatedApp />
+  ) : (
+    <UnauthenticatedApp signUp={signUp} login={login} />
   );
 };
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MovieListItem from 'components/movie-list-item';
-import GeneralLayout from 'components/general-layout';
+import ContainedLayout from 'components/contained-layout';
 import apiClient from 'utils/api-client';
 import useApiCall from 'hooks/use-api-call';
 import SearchForm from 'components/search-form';
@@ -21,7 +21,7 @@ const Movies = () => {
   };
 
   return (
-    <GeneralLayout>
+    <ContainedLayout>
       <SearchForm initialQuery={query} onSearch={onSearch} />
       {!loaded && <p>Loading movies</p>}
       {loaded && movies.length
@@ -32,7 +32,7 @@ const Movies = () => {
       {loaded && !movies.length ? (
         <p>There are no movies with the required results</p>
       ) : null}
-    </GeneralLayout>
+    </ContainedLayout>
   );
 };
 
