@@ -41,7 +41,6 @@ class Movies extends React.Component {
 
   render() {
     const { loaded, movies, query } = this.state;
-    debugger;
     const filteredMovies = movies.filter((movie) =>
       movie.title.startsWith(query),
     );
