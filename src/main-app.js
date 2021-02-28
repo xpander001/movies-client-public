@@ -1,7 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import AuthenticatedApp from 'authenticated-app';
 import UnauthenticatedApp from 'unathenticated-app';
-import { signup as authSignup, getToken, me as authMe } from 'utils/auth-utils';
+import {
+  signup as authSignup,
+  login as authLogin,
+  getToken,
+  me as authMe,
+} from 'utils/auth-utils';
 import useApiCall from 'hooks/use-api-call';
 
 const getUser = async () => {
@@ -27,7 +32,9 @@ const App = () => {
     authSignup(name, email, password).then((user) => setUser(user));
   };
 
-  const login = () => {};
+  const login = (email, password) => {
+    authLogin(email, password).then((user) => setUser(user));
+  };
 
   if (!loaded) {
     return <p>loading</p>;

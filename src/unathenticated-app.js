@@ -4,11 +4,11 @@ import LoginScreen from 'screens/login';
 import SignupScreen from 'screens/signup';
 import { routes } from 'utils/constants';
 
-const AuthenticatedApp = ({ signUp }) => {
+const AuthenticatedApp = ({ signUp, login }) => {
   return (
     <Switch>
       <Route path={routes.login}>
-        <LoginScreen />
+        <LoginScreen login={login} />
       </Route>
       <Route path={routes.signup}>
         <SignupScreen signUp={signUp} />
