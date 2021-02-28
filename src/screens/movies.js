@@ -57,6 +57,10 @@ const movies = {
   currentPage: 1,
 };
 
+// Tenemos que pintar:
+// Un input, que cuando escribamos filtre las pelis de la lista por titulo
+// La lista de las pelis usando MovieListItem
+// Si no hay resultados, un p que diga 'There are no movies with the required results'.
 const Movies = () => {
   return <div>Hello world</div>;
 };
