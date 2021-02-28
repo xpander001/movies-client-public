@@ -1,4 +1,8 @@
 import React from 'react';
+import MovieListItem from 'components/movie-list-item';
+import GeneralLayout from 'components/general-layout';
+import Input from 'components/input';
+import Button from 'components/button';
 
 const movies = {
   movies: [
@@ -57,12 +61,37 @@ const movies = {
   currentPage: 1,
 };
 
-// Tenemos que pintar:
-// Un input, que cuando escribamos filtre las pelis de la lista por titulo
-// La lista de las pelis usando MovieListItem
-// Si no hay resultados, un p que diga 'There are no movies with the required results'.
-const Movies = () => {
-  return <div>Hello world</div>;
-};
+class Movies extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { query: '' };
+
+    this.updateQuery = this.updateQuery.bind(this);
+  }
+
+  updateQuery(e) {
+    this.setState({ query: e.currentTarget.value });
+  }
+
+  render() {
+    const filteredMovies = movies.movies.filter((movie) =>
+      movie.title.startsWith(this.state.query),
+    );
+    return (
+      <GeneralLayout>
+        <div className="mb-4">
+          <Input value={this.state.query} onChange={this.updateQuery} />
+        </div>
+        {filteredMovies.length ? (
+          filteredMovies.map((movie) => (
+            <MovieListItem title={movie.title} key={movie._id} />
+          ))
+        ) : (
+          <p>There are no movies with the required results</p>
+        )}
+      </GeneralLayout>
+    );
+  }
+}
 
 export default Movies;

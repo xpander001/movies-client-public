@@ -1,11 +1,12 @@
 import React from 'react';
-// import Header from 'components/header'; // TODO Usamos el header?
+import Header from 'components/header';
 
 const GeneralLayout = ({ children }) => {
   return (
     <div>
+      <Header />
       <main>
-        <div className="container">Que ponemos aquí?</div>
+        <div className="container">{children}</div>
       </main>
     </div>
   );
