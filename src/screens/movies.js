@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import MovieListItem from 'components/movie-list-item';
 import GeneralLayout from 'components/general-layout';
-import Input from 'components/input';
 import apiClient from 'utils/api-client';
+import SearchForm from 'components/search-form';
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
@@ -10,7 +10,8 @@ const Movies = () => {
   const [query, setQuery] = useState('');
 
   useEffect(() => {
-    apiClient('api/movie').then(
+    const url = query ? `api/movie?title=${query}` : 'api/movie';
+    apiClient(url).then(
       (data) => {
         setMovies([...data.movies]);
         setLoaded(true);
@@ -19,28 +20,22 @@ const Movies = () => {
         setLoaded(true);
       },
     );
-  }, []);
+  }, [query]);
 
-  const filteredMovies = movies.filter((movie) =>
-    movie.title.startsWith(query),
-  );
-
-  const updateQuery = (e) => {
-    setQuery(e.currentTarget.value);
+  const onSearch = (newSearch) => {
+    setQuery(newSearch);
   };
 
   return (
     <GeneralLayout>
-      <div className="mb-4">
-        <Input value={query} onChange={updateQuery} />
-      </div>
+      <SearchForm initialQuery={query} onSearch={onSearch} />
       {!loaded && <p>Loading movies</p>}
-      {loaded && filteredMovies.length
-        ? filteredMovies.map((movie) => (
+      {loaded && movies.length
+        ? movies.map((movie) => (
             <MovieListItem title={movie.title} key={movie._id} />
           ))
         : null}
-      {loaded && !filteredMovies.length ? (
+      {loaded && !movies.length ? (
         <p>There are no movies with the required results</p>
       ) : null}
     </GeneralLayout>
