@@ -1,10 +1,10 @@
 import React from 'react';
 import Header from 'components/header';
 
-const GeneralLayout = ({ user, logout, children }) => {
+const GeneralLayout = ({ children }) => {
   return (
     <div>
-      <Header user={user} logout={logout} />
+      <Header />
       <main>{children}</main>
     </div>
   );

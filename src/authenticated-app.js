@@ -4,14 +4,14 @@ import MoviesScreen from 'screens/movies';
 import MovieDetailScreen from 'screens/movie-detail';
 import { routes } from 'utils/constants';
 
-const AuthenticatedApp = ({ user, logout }) => {
+const AuthenticatedApp = () => {
   return (
     <Switch>
       <Route path={routes.home} exact>
-        <MoviesScreen user={user} logout={logout} />
+        <MoviesScreen />
       </Route>
       <Route path={routes.movieDetail}>
-        <MovieDetailScreen user={user} logout={logout} />
+        <MovieDetailScreen />
       </Route>
       <Route path={routes.all}>
         <Redirect to={routes.home} />

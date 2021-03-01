@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import ContainedLayout from 'components/contained-layout';
 import { useParams } from 'react-router-dom';
 import apiClient from 'utils/api-client';
 import useApiCall from 'hooks/use-api-call';
 
-const MovieDetail = ({ user, logout }) => {
+const MovieDetail = () => {
   const { movieId } = useParams();
   const { data: movie, loaded, run } = useApiCall();
 
@@ -14,7 +14,7 @@ const MovieDetail = ({ user, logout }) => {
 
   if (!loaded) {
     return (
-      <ContainedLayout user={user} logout={logout}>
+      <ContainedLayout>
         <p>Loading</p>
       </ContainedLayout>
     );
@@ -22,7 +22,7 @@ const MovieDetail = ({ user, logout }) => {
 
   if (movie) {
     return (
-      <ContainedLayout user={user} logout={logout}>
+      <ContainedLayout>
         <p>{movie.title}</p>
         <p>{movie.description}</p>
       </ContainedLayout>
@@ -31,7 +31,7 @@ const MovieDetail = ({ user, logout }) => {
 
   if (loaded && !movie) {
     return (
-      <ContainedLayout user={user} logout={logout}>
+      <ContainedLayout>
         <p>Movie for id {movieId} not found!</p>
       </ContainedLayout>
     );
