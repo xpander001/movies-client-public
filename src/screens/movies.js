@@ -32,7 +32,7 @@ const Movies = () => {
       {!loaded && <p>Loading movies</p>}
       {loaded && movies.length
         ? movies.map((movie) => (
-            <MovieListItem title={movie.title} key={movie._id} />
+            <MovieListItem title={movie.title} id={movie._id} key={movie._id} />
           ))
         : null}
       {loaded && !movies.length ? (
