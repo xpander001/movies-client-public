@@ -17,7 +17,7 @@ Sin embargo, si queremos que se ejecute cuando, por ejemplo, nuestra variable de
 
 ```
 useEffect(() => {
-  console.log('Me en render y cada vez que query cambie);
+  console.log('Me ejecuto en primer render y cada vez que query cambie);
 }, [query])
 ```
 
