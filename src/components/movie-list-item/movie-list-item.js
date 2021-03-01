@@ -1,8 +1,7 @@
 import React from 'react';
 
-// TODO: Arreglar este movie list item para recibir el nombre y pintarlo
-const MovieListItem = () => {
-  return <div>Soy un movie list item</div>;
+const MovieListItem = (props) => {
+  return <article className="border mb-2 p-2">{props.title}</article>;
 };
 
 export default MovieListItem;
