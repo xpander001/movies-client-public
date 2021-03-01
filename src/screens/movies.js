@@ -5,7 +5,7 @@ import apiClient from 'utils/api-client';
 import useApiCall from 'hooks/use-api-call';
 import SearchForm from 'components/search-form';
 
-const Movies = () => {
+const Movies = ({ user, logout }) => {
   const { data, loaded, run } = useApiCall();
   const [query, setQuery] = useState('');
 
@@ -21,7 +21,7 @@ const Movies = () => {
   };
 
   return (
-    <ContainedLayout>
+    <ContainedLayout user={user} logout={logout}>
       <SearchForm initialQuery={query} onSearch={onSearch} />
       {!loaded && <p>Loading movies</p>}
       {loaded && movies.length

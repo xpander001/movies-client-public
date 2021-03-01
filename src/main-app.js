@@ -4,6 +4,7 @@ import UnauthenticatedApp from 'unathenticated-app';
 import {
   signup as authSignup,
   login as authLogin,
+  logout as authLogout,
   getToken,
   me as authMe,
 } from 'utils/auth-utils';
@@ -36,14 +37,24 @@ const App = () => {
     authLogin(email, password).then((user) => setUser(user));
   };
 
+  const logout = () => {
+    setUser(null);
+    authLogout();
+  };
+
   if (!loaded) {
     return <p>loading</p>;
   }
 
   return user ? (
-    <AuthenticatedApp />
+    <AuthenticatedApp user={user} logout={logout} />
   ) : (
-    <UnauthenticatedApp signUp={signUp} login={login} />
+    <UnauthenticatedApp
+      signUp={signUp}
+      login={login}
+      user={user}
+      logout={logout}
+    />
   );
 };
 

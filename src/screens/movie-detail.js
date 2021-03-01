@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import apiClient from 'utils/api-client';
 import useApiCall from 'hooks/use-api-call';
 
-const MovieDetail = () => {
+const MovieDetail = ({ user, logout }) => {
   const { movieId } = useParams();
   const { data: movie, loaded, run } = useApiCall();
 
@@ -14,7 +14,7 @@ const MovieDetail = () => {
 
   if (!loaded) {
     return (
-      <ContainedLayout>
+      <ContainedLayout user={user} logout={logout}>
         <p>Loading</p>
       </ContainedLayout>
     );
@@ -22,7 +22,7 @@ const MovieDetail = () => {
 
   if (movie) {
     return (
-      <ContainedLayout>
+      <ContainedLayout user={user} logout={logout}>
         <p>{movie.title}</p>
         <p>{movie.description}</p>
       </ContainedLayout>
@@ -31,7 +31,7 @@ const MovieDetail = () => {
 
   if (loaded && !movie) {
     return (
-      <ContainedLayout>
+      <ContainedLayout user={user} logout={logout}>
         <p>Movie for id {movieId} not found!</p>
       </ContainedLayout>
     );

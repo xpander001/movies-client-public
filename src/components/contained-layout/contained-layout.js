@@ -1,9 +1,9 @@
 import React from 'react';
 import GeneralLayout from 'components/general-layout';
 
-const ContainedLayout = ({ children }) => {
+const ContainedLayout = ({ user, logout, children }) => {
   return (
-    <GeneralLayout>
+    <GeneralLayout user={user} logout={logout}>
       <div className="container">{children}</div>
     </GeneralLayout>
   );
