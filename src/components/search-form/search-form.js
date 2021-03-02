@@ -1,30 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef } from 'react';
 import Input from 'components/input';
-import useDebounce from 'hooks/use-debounce';
 
 const SearchForm = ({ onSearch, initialQuery }) => {
-  const [query, setQuery] = useState(initialQuery);
-  const { debouncedValue: debouncedQuery, clearTimer } = useDebounce(query);
+  const timer = useRef();
 
-  useEffect(() => {
-    onSearch(debouncedQuery);
-  }, [debouncedQuery, onSearch]);
+  const clearTimer = () => clearTimeout(timer.current);
 
   const onChange = (e) => {
-    setQuery(e.currentTarget.value);
+    clearTimer();
+    timer.current = setTimeout(() => {
+      onSearch(e.target.value);
+    }, 500);
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
     clearTimer();
-    onSearch(query);
+    onSearch(e.target.elements.search.value);
   };
 
   return (
     <form className="mb-4" onSubmit={onSubmit}>
       <Input
+        defaultValue={initialQuery}
         label="Search"
-        value={query}
         type="text"
         name="search"
         id="search"
