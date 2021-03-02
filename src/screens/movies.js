@@ -11,10 +11,7 @@ const Movies = () => {
   const location = useLocation();
   const history = useHistory();
 
-  const query = useMemo(
-    () => new URLSearchParams(location.search).get('query') || '',
-    [location.search],
-  );
+  const query = new URLSearchParams(location.search).get('query') || '';
 
   useEffect(() => {
     const url = query ? `api/movie?title=${query}` : 'api/movie';
