@@ -59,7 +59,7 @@ const ModalContent = ({ children }) => {
     setIsOpen(false);
   };
   return (
-    <div className={modalClass}>
+    <div className={modalClass} role="dialog" aria-hidden={!isOpen}>
       <div className="modal__overlay"></div>
       <div className="modal__content border">
         <div className="d-flex flex-row-reverse">

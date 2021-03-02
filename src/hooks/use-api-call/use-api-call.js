@@ -6,6 +6,9 @@ const useApiCall = () => {
   const [loaded, setLoaded] = useState(false);
 
   const run = useCallback((apiCallPromise) => {
+    if (!apiCallPromise || !apiCallPromise.then) {
+      throw new Error('Run should get a promise as param');
+    }
     setLoading(true);
     return apiCallPromise.then(
       (data) => {
