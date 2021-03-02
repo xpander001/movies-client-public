@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Input from 'components/input';
 import useDebounce from 'hooks/use-debounce';
 
-const SearchForm = ({ onSearch, initialQuery }) => {
+const SearchForm = ({ onSearch, initialQuery = '' }) => {
   const [query, setQuery] = useState(initialQuery);
   const { debouncedValue: debouncedQuery, clearTimer } = useDebounce(query);
 

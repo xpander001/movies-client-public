@@ -1,13 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import MovieListItem from 'components/movie-list-item';
 import GeneralLayout from 'components/general-layout';
 import apiClient from 'utils/api-client';
 import SearchForm from 'components/search-form';
+import { useLocation, useHistory } from 'react-router-dom';
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
   const [loaded, setLoaded] = useState(false);
-  const [query, setQuery] = useState('');
+  const location = useLocation();
+  const history = useHistory();
+
+  const query = useMemo(
+    () => new URLSearchParams(location.search).get('query') || '',
+    [location.search],
+  );
 
   useEffect(() => {
     const url = query ? `api/movie?title=${query}` : 'api/movie';
@@ -22,9 +29,16 @@ const Movies = () => {
     );
   }, [query]);
 
-  const onSearch = (newSearch) => {
-    setQuery(newSearch);
-  };
+  const onSearch = useCallback(
+    (newSearch) => {
+      if (newSearch && newSearch.length) {
+        history.push(`?query=${newSearch}`);
+      } else {
+        history.push('');
+      }
+    },
+    [history],
+  );
 
   return (
     <GeneralLayout>
