@@ -1,16 +1,25 @@
-import React from 'react';
+import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 import classnames from 'classnames';
 
-const Button = ({
-  type = 'button',
-  primary,
-  outline,
-  fullWidth,
-  onClick = () => {},
-  children,
-  disabled,
-  size,
-}) => {
+const Button = (
+  {
+    type = 'button',
+    primary,
+    outline,
+    fullWidth,
+    onClick = () => {},
+    children,
+    disabled,
+    size,
+  },
+  ref,
+) => {
+  const buttonRef = useRef();
+  useImperativeHandle(ref, () => ({
+    focus: () => {
+      buttonRef.current.focus();
+    },
+  }));
   const btnClass = classnames({
     btn: true,
     'btn-primary': !!primary && !outline,
@@ -21,6 +30,7 @@ const Button = ({
   });
   return (
     <button
+      ref={buttonRef}
       className={btnClass}
       type={type}
       onClick={onClick}
@@ -31,4 +41,4 @@ const Button = ({
   );
 };
 
-export default Button;
+export default forwardRef(Button);

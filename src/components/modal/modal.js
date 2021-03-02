@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import classnames from 'classnames';
 import Button from 'components/button';
 import './modal.css';
@@ -27,10 +27,17 @@ const ModalButton = ({ children }) => {
 
 const ModalContent = ({ children }) => {
   const [isOpen, setIsOpen] = useContext(ModalContext);
+  const closeButtonRef = useRef(null);
   const modalClass = classnames({
     modal: true,
     'modal--open': isOpen,
   });
+
+  useEffect(() => {
+    if (isOpen && closeButtonRef.current) {
+      closeButtonRef.current.focus();
+    }
+  }, [isOpen]);
 
   const onKeyPress = useCallback(
     (e) => {
@@ -56,7 +63,12 @@ const ModalContent = ({ children }) => {
       <div className="modal__overlay"></div>
       <div className="modal__content border">
         <div className="d-flex flex-row-reverse">
-          <Button size="small" primary onClick={closeModal}>
+          <Button
+            ref={closeButtonRef}
+            size="small"
+            primary
+            onClick={closeModal}
+          >
             close
           </Button>
         </div>
