@@ -10,3 +10,7 @@ como Enzyme. Sin embargo, dicha librería fomentaba el testeo de detalles de imp
 Debido a ello, React Testing Library ha gozado de mucha más popularidad en los últimos años.
 
 https://testing-library.com/docs/react-testing-library/intro/
+
+NOTA!!!!!
+
+Para este ejercicio, es necesario reejecutar `npm install`
