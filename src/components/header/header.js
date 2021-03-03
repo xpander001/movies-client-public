@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import { Link as RouterLink, useRouteMatch } from 'react-router-dom';
 import { routes } from 'utils/constants';
 import Button from 'components/button';
+import { Modal, ModalContent, ModalButton } from 'components/modal';
 import { useAuth } from 'context/auth-context';
 
 const HeaderLink = ({ path, children }) => {
@@ -28,9 +29,19 @@ const Header = () => {
       {user ? (
         <>
           <div className="mr-2">Hello, {user.name}</div>
-          <Button primary outline onClick={logout}>
-            Logout
-          </Button>
+          <Modal>
+            <ModalButton>
+              <Button primary outline>
+                Logout
+              </Button>
+            </ModalButton>
+            <ModalContent>
+              <p>Quieres hacer log out?</p>
+              <Button fullWidth primary onClick={logout}>
+                Yes, I want to log out
+              </Button>
+            </ModalContent>
+          </Modal>
         </>
       ) : (
         <nav className="my-2 my-md-0 me-md-3">
