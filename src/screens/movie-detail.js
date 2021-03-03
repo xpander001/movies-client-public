@@ -1,25 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import GeneralLayout from 'components/general-layout';
 import { useParams } from 'react-router-dom';
 import apiClient from 'utils/api-client';
+import useApiCall from 'hooks/use-api-call';
 
 const MovieDetail = () => {
   const { movieId } = useParams();
-  const [movie, setMovie] = useState(null);
-  const [loaded, setLoaded] = useState(false);
+  const { data: movie, loaded, run } = useApiCall();
 
   useEffect(() => {
     const url = `api/movie/${movieId}`;
-    apiClient(url).then(
-      (data) => {
-        setMovie(data);
-        setLoaded(true);
-      },
-      (error) => {
-        setLoaded(true);
-      },
-    );
-  }, [movieId]);
+    run(apiClient(url));
+  }, [movieId, run]);
 
   if (!loaded) {
     return (

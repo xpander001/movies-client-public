@@ -3,28 +3,22 @@ import MovieListItem from 'components/movie-list-item';
 import GeneralLayout from 'components/general-layout';
 import apiClient from 'utils/api-client';
 import SearchForm from 'components/search-form';
+import useApiCall from 'hooks/use-api-call';
 
 const Movies = () => {
-  const [movies, setMovies] = useState([]);
-  const [loaded, setLoaded] = useState(false);
+  const { data, loaded, run } = useApiCall();
   const [query, setQuery] = useState('');
 
   useEffect(() => {
     const url = query ? `api/movie?title=${query}` : 'api/movie';
-    apiClient(url).then(
-      (data) => {
-        setMovies([...data.movies]);
-        setLoaded(true);
-      },
-      (error) => {
-        setLoaded(true);
-      },
-    );
-  }, [query]);
+    run(apiClient(url));
+  }, [query, run]);
 
   const onSearch = (newSearch) => {
     setQuery(newSearch);
   };
+
+  const movies = data && data.movies ? data.movies : [];
 
   return (
     <GeneralLayout>
