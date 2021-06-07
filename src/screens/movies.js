@@ -1,68 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import MovieListItem from 'components/movie-list-item';
 import GeneralLayout from 'components/general-layout';
 import Input from 'components/input';
 import apiClient from 'utils/api-client';
 
-// TODO: Reescribeme usando useState y useEffect
-class Movies extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { query: '', movies: [], loading: false, loaded: false };
+const Movies = () => {
+  const [movies, setMovies] = useState([]);
+  const [query, setQuery] = useState('');
+  const [loaded, setLoaded] = useState(false);
 
-    this.updateQuery = this.updateQuery.bind(this);
-  }
+  const updateQuery = (e) => {
+    setQuery(e.currentTarget.value);
+  };
 
-  componentDidMount() {
-    this.setState({
-      ...this.state,
-      loading: true,
+  useEffect(() => {
+    apiClient('api/movie').then((data) => {
+      setMovies([...data.movies]);
+      setLoaded(true);
     });
-    apiClient('api/movie').then(
-      (data) => {
-        this.setState({
-          ...this.state,
-          movies: data.movies,
-          loading: false,
-          loaded: true,
-        });
-      },
-      (error) => {
-        this.setState({
-          ...this.state,
-          loading: false,
-          loaded: true,
-        });
-      },
-    );
-  }
+  }, []);
 
-  updateQuery(e) {
-    this.setState({ query: e.currentTarget.value });
-  }
+  const filteredMovies = movies.filter((movie) =>
+    movie.title.startsWith(query),
+  );
 
-  render() {
-    const { loaded, movies, query } = this.state;
-    const filteredMovies = movies.filter((movie) =>
-      movie.title.startsWith(query),
-    );
-    return (
-      <GeneralLayout>
-        <div className="mb-4">
-          <Input value={this.state.query} onChange={this.updateQuery} />
-        </div>
-        {!loaded && <p>Loading movies</p>}
-        {loaded && filteredMovies.length
-          ? filteredMovies.map((movie) => (
-              <MovieListItem title={movie.title} key={movie._id} />
-            ))
-          : null}
-        {loaded && !filteredMovies.length ? (
-          <p>There are no movies with the required results</p>
-        ) : null}
-      </GeneralLayout>
-    );
-  }
-}
+  return (
+    <GeneralLayout>
+      <div className="mb-4">
+        <Input value={query} onChange={updateQuery} />
+      </div>
+      {!loaded && <p>Loading movies</p>}
+      {loaded && filteredMovies.length
+        ? filteredMovies.map((movie) => (
+            <MovieListItem title={movie.title} key={movie._id} />
+          ))
+        : null}
+      {loaded && !filteredMovies.length ? (
+        <p>There are no movies with the required results</p>
+      ) : null}
+    </GeneralLayout>
+  );
+};
 
 export default Movies;
