@@ -1,26 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import MovieListItem from 'components/movie-list-item';
 import GeneralLayout from 'components/general-layout';
 import apiClient from 'utils/api-client';
 import SearchForm from 'components/search-form';
+import useApiCall from 'hooks/use-api-call';
 
 const Movies = () => {
-  const [movies, setMovies] = useState([]);
-  const [loaded, setLoaded] = useState(false);
   const [query, setQuery] = useState('');
 
+  const { data, loaded, run } = useApiCall();
+
+  const movies = data ? data.movies : [];
+
+  const url = useMemo(
+    () => (query ? `api/movie?title=${query}` : 'api/movie'),
+    [query],
+  );
+
   useEffect(() => {
-    const url = query ? `api/movie?title=${query}` : 'api/movie';
-    apiClient(url).then(
-      (data) => {
-        setMovies([...data.movies]);
-        setLoaded(true);
-      },
-      (error) => {
-        setLoaded(true);
-      },
-    );
-  }, [query]);
+    run(apiClient(url));
+  }, [url, run]);
 
   const onSearch = (newSearch) => {
     setQuery(newSearch);
